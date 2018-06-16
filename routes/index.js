@@ -8,4 +8,12 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/login', function(req, res, next) {
+  res.render('page/login', { layout: 'plain-layout' });
+});
+
+router.get('/register', function(req, res, next) {
+  res.render('page/register', { layout: 'plain-layout' });
+});
+
 module.exports = router;
