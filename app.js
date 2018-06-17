@@ -5,9 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var ejsLayouts = require("express-ejs-layouts");
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
 var app = express();
 
 // authenticated session
@@ -39,6 +36,23 @@ var check_session = require('./middleware/check_session')
 app.use(show_clientip)
 app.set('check_session', check_session)
 
+// get our predefined file
+var config = require('./config');
+var errcode = require('./errcode');
+var utils = require('./utils');
+var enums = require('./enums');
+var constants = require('./constants');
+
+// Load model and sequelize
+var sequelize = require('./sequelize');
+var M = require('./model');
+
+app.set('super_secret', config.super_secret); // secret variable
+app.set('utils',utils);
+app.set('errcode',errcode);
+app.set('enums',enums);
+app.set('constants',constants);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -52,8 +66,8 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// load routes
+require('./routes')(app,config,M,sequelize,express);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -7,36 +7,10 @@
 // var utils = require('./../utils');
 
 module.exports = function(req, res, next) {
-	if (req.session.accountId) {
-        next();
-    } else {
-        res.redirect('/login');
-    }
+	console.log(req.session);
+	if (req.session.account_id) {
+		next();
+	} else {
+		res.redirect('/login');
+	}
 };
-
-/*
-module.exports = function(req, res, next) {
-
-    var username = req.session.username;
-    var email = req.session.email;
-    var hashedPassword = req.session.hashedPassword;
-
-    if (utils.chkObj(username) && utils.chkObj(email) && utils.chkObj(hashedPassword)) {
-        ORM.Account.findOne({ where:
-            {
-                username: username,
-                email:email,
-                password:hashedPassword
-            }
-        }).then(account => {
-            if (account) {
-                next();
-            } else {
-                res.redirect('/login');
-            }
-        });
-    } else {
-        res.redirect('/login');
-    }
-};
-*/

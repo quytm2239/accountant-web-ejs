@@ -4,22 +4,28 @@
 		var collapse = false;
 		var sidebar = $('.sidebar');
 		var sidebarCollapse = $('#sidebarCollapse');
-    var mainPanel = $('.main-panel');
+		var mainPanel = $('.main-panel');
 
 		// create collapse-expand button on navbar
 		sidebarCollapse.on('click', function() {
 			if (collapse) { // It is collapsing
 				sidebarCollapse.removeClass('mdi-arrow-right-drop-circle-outline');
 				sidebarCollapse.addClass('mdi-arrow-left-drop-circle-outline');
-        sidebar.css('width', '255px');
-        mainPanel.css('width', 'calc(100% - 255px)');
+				sidebar.css('width', '255px');
+				mainPanel.css('width', 'calc(100% - 255px)');
 			} else {
 				sidebarCollapse.removeClass('mdi-arrow-left-drop-circle-outline');
 				sidebarCollapse.addClass('mdi-arrow-right-drop-circle-outline');
-        sidebar.css('width', '0px');
-        mainPanel.css('width', 'calc(100% - 0px)');
+				sidebar.css('width', '0px');
+				mainPanel.css('width', 'calc(100% - 0px)');
 			}
 			collapse = !collapse;
+		});
+
+		$('#aLogout').click(function() {
+			$.post("/logout", function(data) {
+				window.location = data;
+			});
 		});
 
 		//Add active class to nav-link based on url dynamically

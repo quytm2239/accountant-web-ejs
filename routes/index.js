@@ -1,19 +1,18 @@
-var express = require('express');
-var router = express.Router();
+module.exports = function(app, config, M, sequelize, express) {
+	var publicRouter = express.Router();
+	require('./public')(app, publicRouter, config, M, sequelize);
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render("index", {
-    companyName: "Cty TNHH Phú Liên"
-  });
-});
+  // Process to check session
+	publicRouter.use(function(req, res, next) {
+    console.log(req.session);
+  	if (req.session.account_id) {
+  		next();
+  	} else {
+  		res.redirect('/login');
+  	}
+	})
+  // load route using middleware
+	require('./auth')(app, publicRouter, config, M, sequelize);
 
-router.get('/login', function(req, res, next) {
-  res.render('page/login', { layout: 'plain-layout' });
-});
-
-router.get('/register', function(req, res, next) {
-  res.render('page/register', { layout: 'plain-layout' });
-});
-
-module.exports = router;
+	app.use('/', publicRouter);
+};
