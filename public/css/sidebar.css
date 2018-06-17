@@ -1,0 +1,12 @@
+.sticky-bottom {
+  position: fixed;
+  bottom: 0;
+}
+
+#collapseButton, #collapseStickyButton {
+  cursor: pointer;
+}
+
+.sidebar .nav li.nav-item a.nav-link:hover {
+  background-color: lightgrey !important;
+}
