@@ -1,3 +1,21 @@
 .dropdown-item {
   cursor: default;
 }
+
+#sidebarCollapse {
+  font-size: 30px;
+}
+
+#topOfSideBar {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.company-name {
+  font-size: 16px;
+}
+
+#sidebarCollapse, .company-name {
+  margin: auto;
+  color: blueviolet;
+}

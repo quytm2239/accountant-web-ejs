@@ -1,13 +1,16 @@
 <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-	<div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-		<a class="navbar-brand brand-logo" href="/">
+	<div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center" id="topOfSideBar">
+		<span class="mdi mdi-arrow-left-drop-circle-outline" id="sidebarCollapse"></span>
+		<span class="company-name"><%= companyName %></span>
+		<%# <a class="navbar-brand brand-logo" href="/">
+			<span class="mdi mdi-arrow-left-drop-circle-outline"></span>
           <img src="images/logo.svg" alt="logo" />
         </a>
 		<a class="navbar-brand brand-logo-mini" href="/">
           <img src="images/logo-mini.svg" alt="logo" />
-        </a>
+        </a> %>
 	</div>
-	<div class="navbar-menu-wrapper d-flex align-items-center">
+	<div class="navbar-menu-wrapper d-flex align-items-center" id="topOfMainPanel">
 		<ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
 			<li class="nav-item">
 				<a href="#" class="nav-link">Schedule
