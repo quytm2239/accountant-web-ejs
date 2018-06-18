@@ -3,14 +3,29 @@
 		<div class="col-lg-4 mx-auto">
 			<h2 class="text-center mb-4">Register</h2>
 			<div class="auto-form-wrapper">
-				<form action="#">
-					<div class="form-group">
+				<label id="errorLabel" class="label" style="text-align: center; width: 100%; color: red;"></label>
+				<form action="/register" method="post" enctype="multipart/form-data">
+					<% inputs.forEach(function(input) { %>
+						<div class="form-group">
+							<label class="label"><%= input.placeholder %></label>
+							<div class="input-group">
+								<input type="<%= input.type %>" name="<%= input.name %>" class="form-control" placeholder="<%= input.placeholder %>">
+								<div class="input-group-append">
+									<span class="input-group-text">
+										<i class="mdi mdi-check-circle-outline"></i>
+									</span>
+								</div>
+							</div>
+						</div>
+					<% }); %>
+					<%# <div class="form-group">
+						<label class="label">Username</label>
 						<div class="input-group">
-							<input type="text" class="form-control" placeholder="Username">
+							<input type="text" class="form-control" placeholder="Email">
 							<div class="input-group-append">
 								<span class="input-group-text">
-                        <i class="mdi mdi-check-circle-outline"></i>
-                      </span>
+									<i class="mdi mdi-check-circle-outline"></i>
+                </span>
 							</div>
 						</div>
 					</div>
@@ -33,7 +48,7 @@
                       </span>
 							</div>
 						</div>
-					</div>
+					</div> %>
 					<div class="form-group d-flex justify-content-center">
 						<div class="form-check form-check-flat mt-0">
 							<label class="form-check-label">
@@ -46,7 +61,7 @@
 					</div>
 					<div class="text-block text-center my-3">
 						<span class="text-small font-weight-semibold">Already have and account ?</span>
-						<a href="login.html" class="text-black text-small">Login</a>
+						<a href="/login" class="text-black text-small">Login</a>
 					</div>
 				</form>
 			</div>
