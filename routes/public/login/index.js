@@ -1,12 +1,20 @@
 module.exports = function(app, publicRouter, config, M, sequelize) {
   var errcode = app.get('errcode');
+  var LOGIN_VIEW_PATH = 'page/login'
+  var PLAIN_LAYOUT = 'plain-layout'
+  var EMPTY = ''
+  var ERROR_NOT_EXIST = 'Username or password does not exist!'
+  var ERROR_NOT_APPROVED = 'Your account needs Admin approve to use!'
 
   publicRouter.get('/login', function(req, res, next) {
     if (req.session.account_id) {
       res.redirect('/home');
     } else {
-      res.render('page/login', {
-        layout: 'plain-layout'
+      res.render(LOGIN_VIEW_PATH, {
+        layout: PLAIN_LAYOUT,
+        username: EMPTY,
+        password: EMPTY,
+        message: EMPTY
       });
     }
   });
@@ -29,11 +37,12 @@ module.exports = function(app, publicRouter, config, M, sequelize) {
     var username = req.body.username;
     var password = req.body.password;
     if (utils.isNullorUndefined(username) || utils.isNullorUndefined(password)) {
-      res.status(400).send({
-        success: false,
-        message: 'Username or password does not exist!'
+      return res.render(LOGIN_VIEW_PATH, {
+        layout: PLAIN_LAYOUT,
+        username: username,
+        password: password,
+        message: ERROR_NOT_EXIST
       });
-      return;
     }
     M.Account.findOne({
       where: {
@@ -42,11 +51,12 @@ module.exports = function(app, publicRouter, config, M, sequelize) {
     }).then(account => {
       if (account && utils.isExactPass(password, account.password)) {
         if (account.dataValues.status == accountStatusEnum.NEED_APPROVAL) {
-          res.status(400).send({
-            success: false,
-            message: 'Your account needs Admin approve to use!',
+          return res.render(LOGIN_VIEW_PATH, {
+            layout: PLAIN_LAYOUT,
+            username: username,
+            password: password,
+            message: ERROR_NOT_APPROVED
           });
-          return;
         }
         // setup Session
         req.session.account_id = account.dataValues.id;
@@ -57,9 +67,11 @@ module.exports = function(app, publicRouter, config, M, sequelize) {
 
         res.redirect('/home');
       } else {
-        res.status(400).send({
-          success: false,
-          message: 'username or password is not true!'
+        return res.render(LOGIN_VIEW_PATH, {
+          layout: PLAIN_LAYOUT,
+          username: username,
+          password: password,
+          message: 'Username or password does not exist!'
         });
       }
     });
