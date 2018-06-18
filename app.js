@@ -66,6 +66,9 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// create admin account
+require('./master-data')(sequelize, M.Account, M.Profile, utils, enums.ACCOUNT_STATUS);
+
 // load routes
 require('./routes')(app,config,M,sequelize,express);
 
