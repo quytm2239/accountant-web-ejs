@@ -9,6 +9,7 @@ module.exports = function(app, publicRouter, config, M, sequelize) {
 
   var http = require('http'),
     inspect = require('util').inspect;
+  var Busboy = require('busboy');
 
   publicRouter.get('/register', function(req, res, next) {
     res.render(REGISTER_LOGIN_VIEW_PATH, {
