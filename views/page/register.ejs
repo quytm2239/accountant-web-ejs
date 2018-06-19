@@ -30,11 +30,11 @@
 											</div>
 										</div>
 									</div>
-								<% } else { %>
+								<% } else if (item.name == 'phone') { %>
 									<div class="form-group" style="width: 50%; margin-left:10px;">
 										<label class="label"><%= item.placeholder %></label>
 										<div class="input-group">
-											<input type="text" name="<%= item.name %>" class="form-control" placeholder="<%= item.placeholder %>" pattern="[0-9]{10}" required>
+											<input type="text" name="<%= item.name %>" class="form-control" placeholder="<%= item.placeholder %>" pattern="<%= item.pattern %>" required>
 											<div class="input-group-append">
 												<span class="input-group-text">
 													<i class="mdi mdi-check-circle-outline"></i>
@@ -42,6 +42,8 @@
 											</div>
 										</div>
 									</div>
+								<% } else { %>
+
 								<% } %>
 							<% }) %>
 							</div>
