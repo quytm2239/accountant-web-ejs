@@ -14,7 +14,20 @@ module.exports = function(app, publicRouter, config, M, sequelize) {
     var multer = require('multer')
     var upload = multer({ storage: app.get('multer-storage') })
 
+    var genders =
+    [
+        {
+            display: 'Nam',
+            value: app.get('enums').GENDER.MALE
+        },
+        {
+            display: 'Nữ',
+            value: app.get('enums').GENDER.FEMALE
+        },
+    ]
+
     publicRouter.get('/register', function(req, res, next) {
+
         res.render(REGISTER_LOGIN_VIEW_PATH, {
             layout: PLAIN_LAYOUT,
             inputs: [
@@ -25,10 +38,12 @@ module.exports = function(app, publicRouter, config, M, sequelize) {
                 {type: 'text', name: 'role_id', placeholder: 'Role'},
 
                 {type: 'text', name: 'full_name', placeholder: 'Full name'},
-                {type: 'text', name: 'gender', placeholder: 'Gender'},
-                {type: 'text', name: 'dob', placeholder: 'Date of birth'},
-                {type: 'text', name: 'phone', placeholder: 'Phone'},
-                {type: 'text', name: 'address', placeholder: 'Email'},
+                [
+                    {type: 'ul-li', name: 'gender', placeholder: 'Gender', genders: genders},
+                    {type: 'date', name: 'dob', placeholder: 'Date of birth'},
+                    {type: 'text', name: 'phone', placeholder: 'Phone', pattern: '[0-9]{10}'}
+                ],
+                {type: 'text', name: 'address', placeholder: 'Address'},
                 {type: 'text', name: 'department_id', placeholder: 'Department'},
                 {type: 'text', name: 'job_title', placeholder: 'Job title'},
                 {type: 'text', name: 'join_date', placeholder: 'Join date'},
@@ -63,16 +78,8 @@ module.exports = function(app, publicRouter, config, M, sequelize) {
 
     app.post('/register', upload.single('avatar'), function (req, res, next) {
         var file = req.file
-        console.log(file)
-        // console.log(req.body)
-
-        if (err) {
-            // An error occurred when uploading
-            console.log(err);
-            return
-        }
-        // Everything went fine
-        res.end()
+        // console.log(req.file)
+        res.redirect('/register')
     })
 
       // publicRouter.post('/register', function(req, res) {

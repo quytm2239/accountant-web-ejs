@@ -1,0 +1,8 @@
+.form-group label, .form-control, option {
+    font-size: 1rem;
+}
+
+.combobox {cursor:pointer;display:inline-block;}
+.combobox .selector{border:1px solid #cccccc;padding: 2px 5px}
+.combobox ul {padding:0;margin:0;display:inline-block;border:1px solid #eeeeee;background-color:#cccccc;}
+.combobox li {padding: 2px 5px}

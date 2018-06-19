@@ -21,6 +21,19 @@
 			}
 			collapse = !collapse;
 		});
+		// for dropdown ui li
+		$('.combobox ul').hide();
+		$('.combobox').hover(
+			function(){
+				$(this).find('ul').stop().slideDown();
+			},
+			function(){
+				$(this).find('ul').stop().slideUp();
+			}
+		);
+		$('.combobox li').click(function(){
+			$(this).parents('.combobox').find('.selector').text($(this).text());
+		});
 
 		$('#aLogout').click(function() {
 			$.post("/logout", function(data) {

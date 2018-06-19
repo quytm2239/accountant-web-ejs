@@ -12,7 +12,8 @@ app.set('multer-storage', require('multer').diskStorage({
 		cb(null, app.get('upload-dir'))
 	},
 	filename: function (req, file, cb) {
-		cb(null, file.fieldname + '-' + Date.now())
+		var file_extension = file.originalname.split('.').pop()
+		cb(null, file.fieldname + '-' + Date.now() + '.' + file_extension)
 	}
 }))
 

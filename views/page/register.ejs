@@ -1,22 +1,64 @@
 <div class="content-wrapper d-flex align-items-center auth register-bg-1 theme-one">
 	<div class="row w-100">
-		<div class="col-lg-4 mx-auto">
+		<div class="col-lg-5 mx-auto">
 			<h2 class="text-center mb-4">Register</h2>
 			<div class="auto-form-wrapper">
 				<label id="errorLabel" class="label" style="text-align: center; width: 100%; color: red;"></label>
 				<form action="/register" method="post" enctype="multipart/form-data">
 					<% inputs.forEach(function(input) { %>
-						<div class="form-group">
-							<label class="label"><%= input.placeholder %></label>
-							<div class="input-group">
-								<input type="<%= input.type %>" name="<%= input.name %>" class="form-control" placeholder="<%= input.placeholder %>">
-								<div class="input-group-append">
-									<span class="input-group-text">
-										<i class="mdi mdi-check-circle-outline"></i>
-									</span>
+						<% if (input.constructor === Array) { %>
+							<div style="display: flex;">
+							<% input.forEach(function(item) { %>
+								<% if (item.name == 'gender') { %>
+									<div class="form-group" style="width: 110px; margin-right:10px;">
+										<label for="exampleFormControlSelect2"><%= item.placeholder %></label>
+										<select class="form-control form-control-lg" id="exampleFormControlSelect2">
+											<% item.genders.forEach(function(gender) { %>
+												<option value="<%= gender.value %>"><%= gender.display %></option>
+												<option value="<%= gender.value %>"><%= gender.display %></option>
+											<% }) %>
+										</select>
+									</div>
+								<% } else if (item.name == 'dob') { %>
+									<div class="form-group" style="width: 50%; margin-left:10px; margin-right:10px;"></label>
+										<label class="label"><%= item.placeholder %></label>
+										<div class="input-group">
+											<input type="date" name="<%= item.name %>" class="form-control" required>
+											<div class="input-group-append">
+												<span class="input-group-text">
+													<i class="mdi mdi-check-circle-outline"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+								<% } else { %>
+									<div class="form-group" style="width: 50%; margin-left:10px;">
+										<label class="label"><%= item.placeholder %></label>
+										<div class="input-group">
+											<input type="text" name="<%= item.name %>" class="form-control" placeholder="<%= item.placeholder %>" pattern="[0-9]{10}" required>
+											<div class="input-group-append">
+												<span class="input-group-text">
+													<i class="mdi mdi-check-circle-outline"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+								<% } %>
+							<% }) %>
+							</div>
+						<% } else { %>
+							<div class="form-group">
+								<label class="label"><%= input.placeholder %></label>
+								<div class="input-group">
+									<input type="<%= input.type %>" name="<%= input.name %>" class="form-control" placeholder="<%= input.placeholder %>" required>
+									<div class="input-group-append">
+										<span class="input-group-text">
+											<i class="mdi mdi-check-circle-outline"></i>
+										</span>
+									</div>
 								</div>
 							</div>
-						</div>
+						<% } %>
 					<% }); %>
 					<div class="form-group d-flex justify-content-center">
 						<div class="form-check form-check-flat mt-0">
