@@ -111,25 +111,5 @@ $(function() {
                 $("#btnRegister").prop("disabled", false);
             }
         });
-
-        // $.post("/register", {
-        //     full_name: full_name,
-        //     gender: gender,
-        //     email: email,
-        //     username: username,
-        //     password: password,
-        //     dob: dob,
-        //     phone: phone,
-        //     address: address,
-        //     role_id: role_id,
-        //     department_id: department_id,
-        //     job_title: job_title,
-        //     join_date: join_date,
-        //     contract_code: contract_code,
-        //     staff_code: staff_code
-        // }, function(data, status) {
-        //     $('#message').text(data.message);
-        //     $('#myModal').css('display', 'block');
-        // });
     });
 });
