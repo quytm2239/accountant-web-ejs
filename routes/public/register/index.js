@@ -3,7 +3,7 @@ module.exports = function(app, publicRouter, config, M, sequelize) {
 	var utils = app.get('utils')
 	var accountStatusEnum = app.get('enums').ACCOUNT_STATUS
 
-	var REGISTER_LOGIN_VIEW_PATH = 'page/register'
+	var REGISTER_REGISTER_VIEW_PATH = 'page/register'
 	var PLAIN_LAYOUT = 'plain-layout'
 	var EMPTY = ''
 
@@ -60,7 +60,7 @@ module.exports = function(app, publicRouter, config, M, sequelize) {
 
 	publicRouter.get('/register', function(req, res, next) {
 
-		res.render(REGISTER_LOGIN_VIEW_PATH, {
+		res.render(REGISTER_REGISTER_VIEW_PATH, {
 			layout: PLAIN_LAYOUT,
 			inputs: [
 				[{
@@ -185,6 +185,7 @@ module.exports = function(app, publicRouter, config, M, sequelize) {
 	// })
 
 	app.post('/register', upload.single('avatar'), function(req, res, next) {
+		console.log('CLIENT CALL /register');
 		var file = req.file
 		var email = req.body.email
 		var username = req.body.username
