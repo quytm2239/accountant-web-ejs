@@ -23,14 +23,15 @@ module.exports = function(sequelize, Account, Profile, utils, accountStatusEnum)
         }).then(function(account) {
           return Profile.create({
             account_id: account.dataValues.id,
+            avatar: 'http://localhost:3000/avatar/hulkbuster2.0.jpg',
             full_name: 'admin',
             gender: 10,
-            dob: '01/01/1970',
+            dob: '1970-01-01',
             phone: '0123456789',
             address: 'earth',
             department_id: 1000000,
             job_title: 'admin',
-            join_date: '01/01/1970',
+            join_date: '1970-01-01',
             contract_code: 'admin',
             staff_code: 'admin'
           }, {

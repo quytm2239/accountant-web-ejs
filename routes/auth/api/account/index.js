@@ -4,18 +4,7 @@ module.exports = function(app,authRouter,config,M,sequelize){
     var errcode = app.get('errcode')
     var accountStatusEnum = app.get('enums').ACCOUNT_STATUS
 
-    var SUPER_ROLE = app.get('constants').SUPER_ROLE
-  	var checkRole = function(req, res) {
-  		if (req.session.account.role_id != SUPER_ROLE) {
-  			return res.status(403).send({
-  				success: false,
-  				message: 'Your current logged-in account is not allowed to do this action!'
-  			})
-  		}
-  	}
-
     authRouter.post('/add-member', function(req, res) {
-        checkRole(req, res)
 
         var email 	 = req.body.email
         var username = req.body.username

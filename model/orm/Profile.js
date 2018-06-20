@@ -4,6 +4,7 @@ var Sequelize = require('sequelize');
 var Profile = sequelize.define('profile', {
     id: { type: Sequelize.BIGINT(20), primaryKey: true, autoIncrement: true},
     account_id: Sequelize.BIGINT(20),
+    avatar: Sequelize.STRING(400),
     full_name: Sequelize.TEXT,
     gender: Sequelize.INTEGER(2),
     dob: Sequelize.STRING(50),

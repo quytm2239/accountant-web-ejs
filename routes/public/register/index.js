@@ -384,6 +384,7 @@ module.exports = function(app, publicRouter, config, M, sequelize) {
                             }, {transaction: t}).then(function(account) {
                                 return M.Profile.create({
                                     account_id: account.dataValues.id,
+									avatar: 'http://localhost:3000/avatar/' + file.filename,
                                     full_name: full_name,
                                     gender: parseInt(gender),
                                     dob: dob,

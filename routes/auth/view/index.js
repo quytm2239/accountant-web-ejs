@@ -13,8 +13,15 @@ module.exports = function(app, authRouter, config, M, sequelize) {
 	}
 
 	authRouter.get('/home', function(req, res) {
-		res.render("index", {
-			companyName: "Cty TNHH Phú Liên"
-		})
+		M.Profile.find({
+			where: {
+				account_id: req.session.account_id
+			}
+		}).then(profile => {
+			res.render("home", {
+				profile: profile.dataValues,
+				companyName: "Cty TNHH Phú Liên"
+			})
+		});
 	})
 }
