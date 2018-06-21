@@ -2,6 +2,7 @@
 
 module.exports = {
     Account: require('./orm/Account'),
+    AdminList: require('./orm/AdminList'),
     Department: require('./orm/Department'),
     Function: require('./orm/Function'),
     Permission: require('./orm/Permission'),

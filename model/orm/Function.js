@@ -2,9 +2,10 @@ var sequelize = require('./../../sequelize');
 var Sequelize = require('sequelize');
 //Create Item Table Structure
 var Function = sequelize.define('function', {
-    id: { type: Sequelize.INTEGER(10), primaryKey: true, autoIncrement: true},
+    function_id: { type: Sequelize.INTEGER(10), primaryKey: true, autoIncrement: true},
     department_id: Sequelize.INTEGER(10),
     name: Sequelize.TEXT,
+    path: Sequelize.STRING(50),
     description: Sequelize.TEXT,
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE

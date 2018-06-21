@@ -2,7 +2,7 @@ var sequelize = require('./../../sequelize');
 var Sequelize = require('sequelize');
 //Create Item Table Structure
 var Permission = sequelize.define('permission', {
-    id: { type: Sequelize.INTEGER(10), primaryKey: true, autoIncrement: true},
+    permission_id: { type: Sequelize.INTEGER(10), primaryKey: true, autoIncrement: true},
     function_id: Sequelize.INTEGER(10),
     role_id: Sequelize.INTEGER(10),
     department_id: Sequelize.INTEGER(10),

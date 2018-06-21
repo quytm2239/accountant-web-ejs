@@ -2,7 +2,7 @@ var sequelize = require('./../../sequelize');
 var Sequelize = require('sequelize');
 //Create Item Table Structure
 var Account = sequelize.define('account', {
-    id: { type: Sequelize.BIGINT(20), primaryKey: true, autoIncrement: true},
+    account_id: { type: Sequelize.BIGINT(20), primaryKey: true, autoIncrement: true},
     username: Sequelize.STRING(45),
     password: Sequelize.STRING(500),
     email: Sequelize.STRING(100),

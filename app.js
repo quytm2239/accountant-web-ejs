@@ -33,7 +33,7 @@ app.use(session({
 		host: 'localhost',
 		port: 6379,
 		client: redisClient,
-		ttl: 180
+		ttl: 1800
 	}),
 	resave: false,
 	saveUninitialized: false,

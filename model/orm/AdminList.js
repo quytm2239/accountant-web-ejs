@@ -1,11 +1,9 @@
 var sequelize = require('./../../sequelize');
 var Sequelize = require('sequelize');
 //Create Item Table Structure
-var Department = sequelize.define('department', {
-    department_id: { type: Sequelize.INTEGER(10), primaryKey: true, autoIncrement: true},
-    name: Sequelize.STRING(200),
-    path: Sequelize.STRING(50),
-    description: Sequelize.TEXT,
+var AdminList = sequelize.define('admin_list', {
+    admin_list_id: { type: Sequelize.INTEGER(10), primaryKey: true, autoIncrement: true},
+    account_id: Sequelize.INTEGER(10),
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
 },{
@@ -13,19 +11,17 @@ var Department = sequelize.define('department', {
     freezeTableName: true,
 });
 
-// CREATE TABLE `department` (
+// CREATE TABLE `admin_list` (
 //   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-//   `name` varchar(200) NOT NULL,
-//   `description` text NOT NULL,
+//   `account_id` int(10) unsigned NOT NULL,
 //   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 //   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 //   PRIMARY KEY (`id`)
 // ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-
 // force: true will drop the table if it already exists
-Department.sync({force: false}).then(() => {
+AdminList.sync({force: false}).then(() => {
 });
 
-module.exports = Department;
+module.exports = AdminList;
