@@ -1,7 +1,11 @@
 module.exports = function(app, authRouter, config, M, sequelize) {
 
+	var ADMIN_HOME_PATH = app.get('constants').ADMIN_HOME_PATH
+	var ADMIN_HOME_PATH_NAME = app.get('constants').ADMIN_HOME_PATH_NAME
+
 	authRouter.get('/home', function(req, res) {
 		var department = []
+		
 		Promise.all([
 			M.Department.findAll(),
 			M.Profile.findOne({ where: { account_id: req.session.account_id } }),
@@ -10,8 +14,8 @@ module.exports = function(app, authRouter, config, M, sequelize) {
 			// check admin's permission
 			if (req.session.role_id == 777 || results[2].length > 0) {
 				department.push({
-					name: 'Bảng Tin',
-					path: '/news'
+					name: ADMIN_HOME_PATH_NAME,
+					path: ADMIN_HOME_PATH
 				})
 			}
 			// create nav bar item

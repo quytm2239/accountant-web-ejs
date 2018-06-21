@@ -5,6 +5,9 @@ var cookieParser = require('cookie-parser')
 var logger = require('morgan')
 var ejsLayouts = require("express-ejs-layouts")
 
+// var ejs = require('ejs')
+// ejs.delimiter = '@'
+
 var app = express()
 
 app.set('multer-storage', require('multer').diskStorage({
@@ -66,8 +69,10 @@ app.set('constants',constants)
 app.set('upload-dir',require('path').join(__dirname,'upload/avatar'))
 app.use(express.static(path.join(__dirname, 'upload')))
 // view engine setup
+// app.engine('ejs', ejs.renderFile);
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
+
 app.use(ejsLayouts)
 
 app.use(logger('dev'))

@@ -1,44 +1,42 @@
 module.exports = function(app, authRouter, config, M, sequelize) {
 
 	var SUPER_ROLE = app.get('constants').SUPER_ROLE
+	var ADMIN_HOME_PATH = app.get('constants').ADMIN_HOME_PATH
+	var ADMIN_HOME_PATH_NAME = app.get('constants').ADMIN_HOME_PATH_NAME
+	var COMPANY_NAME = app.get('constants').COMPANY_NAME
+	var ADMIN_PATH_ICON = app.get('constants').ADMIN_PATH_ICON
 
 	authRouter.get('/', function(req, res) {
-		if (req.session.role_id == SUPER_ROLE) {
-			res.redirect('/news')
-		} else {
-			M.AdminList.findOne({ where: { account_id: req.session.account_id } }).then(object => {
-				if (object) {
-					req.session.in_admin_list = true
-					res.redirect('/news')
-				} else {
-					req.session.in_admin_list = false
-					M.Department.findOne({ where: { department_id: req.session.department_id } }).then(department => {
-						res.redirect(department.path)
-					})
-				}
-			})
-		}
+		res.redirect(req.session.home_path)
 	})
 
-	authRouter.get('/news', function(req, res) {
+	authRouter.get(ADMIN_HOME_PATH, function(req, res) {
 		var department = []
 		Promise.all([
 			M.Department.findAll(),
 			M.Profile.findOne({ where: { account_id: req.session.account_id } }),
-			M.AdminList.findOne({ where: { account_id: req.session.account_id } })
+			//M.AdminList.findOne({ where: { account_id: req.session.account_id } })
 		]).then(results => {
+
+			// create nav bar item
 			// check admin's permission
-			if (req.session.role_id == 777 || results[2] != null) {
+			if (req.session.home_path == ADMIN_HOME_PATH) {
 				department.push({
-					name: 'Bảng Tin',
-					path: '/news'
+					name: ADMIN_HOME_PATH_NAME,
+					path: ADMIN_HOME_PATH,
+					active: req.path == ADMIN_HOME_PATH ? 'active' : '',
+					icon: ADMIN_PATH_ICON,
+					main: true
 				})
 			}
-			// create nav bar item
+
 			results[0].forEach(elem => {
 				department.push({
 					name: elem.dataValues.name,
-					path: elem.dataValues.path
+					path: elem.dataValues.path,
+					active: elem.dataValues.path == req.path ? 'active' : '',
+					icon: elem.dataValues.icon,
+					main: elem.dataValues.path == req.session.home_path
 				})
 			});
 
@@ -47,40 +45,87 @@ module.exports = function(app, authRouter, config, M, sequelize) {
 			res.render("auth-page/news", {
 				profile: currentProfile.dataValues,
 				department: department,
-				companyName: "Cty TNHH Phú Liên"
+				companyName: COMPANY_NAME
 			})
 		})
 	})
 
-	authRouter.get('/home', function(req, res) {
+	// authRouter.get(ADMIN_HOME_PATH, function(req, res) {
+	// 	var department = []
+	// 	Promise.all([
+	// 		M.Department.findAll(),
+	// 		M.Profile.findOne({ where: { account_id: req.session.account_id } }),
+	// 		//M.AdminList.findOne({ where: { account_id: req.session.account_id } })
+	// 	]).then(results => {
+	//
+	// 		// create nav bar item
+	// 		// check admin's permission
+	// 		if (req.session.home_path == ADMIN_HOME_PATH) {
+	// 			department.push({
+	// 				name: ADMIN_HOME_PATH_NAME,
+	// 				path: ADMIN_HOME_PATH,
+	// 				active: 'active',
+	// 				icon: ADMIN_PATH_ICON,
+	// 				main: true
+	// 			})
+	// 		}
+	//
+	// 		results[0].forEach(elem => {
+	// 			department.push({
+	// 				name: elem.dataValues.name,
+	// 				path: elem.dataValues.path,
+	// 				active: elem.dataValues.path == req.session.home_path ? 'active' : '',
+	// 				icon: elem.dataValues.icon,
+	// 				main: elem.dataValues.path == req.session.home_path
+	// 			})
+	// 		});
+	//
+	// 		// get current profile
+	// 		var currentProfile = results[1]
+	// 		res.render("auth-page/news", {
+	// 			profile: currentProfile.dataValues,
+	// 			department: department,
+	// 			companyName: COMPANY_NAME
+	// 		})
+	// 	})
+	// })
+
+	authRouter.get([ADMIN_HOME_PATH,'/acc','/hr','/sec'], function(req, res) {
 		var department = []
 		Promise.all([
 			M.Department.findAll(),
 			M.Profile.findOne({ where: { account_id: req.session.account_id } }),
-			M.AdminList.findOne({ where: { account_id: req.session.account_id } })
+			//M.AdminList.findOne({ where: { account_id: req.session.account_id } })
 		]).then(results => {
+
+			// create nav bar item
 			// check admin's permission
-			if (req.session.role_id == 777 || results[2] != null) {
+			if (req.session.home_path == ADMIN_HOME_PATH) {
 				department.push({
-					name: 'Bảng Tin',
-					path: '/news'
+					name: ADMIN_HOME_PATH_NAME,
+					path: ADMIN_HOME_PATH,
+					active: req.path == ADMIN_HOME_PATH ? 'active' : '',
+					icon: ADMIN_PATH_ICON,
+					main: true
 				})
 			}
-			// create nav bar item
+
 			results[0].forEach(elem => {
 				department.push({
 					name: elem.dataValues.name,
-					path: elem.dataValues.path
+					path: elem.dataValues.path,
+					active: elem.dataValues.path == req.path ? 'active' : '',
+					icon: elem.dataValues.icon,
+					main: elem.dataValues.path == req.session.home_path
 				})
 			});
 
 			// get current profile
 			var currentProfile = results[1]
-
-			res.render("home", {
+			res.render("auth-page/" + req.path, {
 				profile: currentProfile.dataValues,
 				department: department,
-				companyName: "Cty TNHH Phú Liên"
+				companyName: COMPANY_NAME
 			})
 		})
 	})

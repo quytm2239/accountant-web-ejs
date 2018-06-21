@@ -5,6 +5,7 @@ var Department = sequelize.define('department', {
     department_id: { type: Sequelize.INTEGER(10), primaryKey: true, autoIncrement: true},
     name: Sequelize.STRING(200),
     path: Sequelize.STRING(50),
+    icon: Sequelize.STRING(100),
     description: Sequelize.TEXT,
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE

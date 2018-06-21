@@ -8,7 +8,7 @@ module.exports = function(app, publicRouter, config, M, sequelize) {
 
     publicRouter.get('/login', function(req, res, next) {
         if (req.session.account_id) {
-            res.redirect('/home')
+            res.redirect(req.session.home_path)
         } else {
             res.render(LOGIN_VIEW_PATH, {
                 layout: PLAIN_LAYOUT,
@@ -34,6 +34,7 @@ module.exports = function(app, publicRouter, config, M, sequelize) {
         var utils = app.get('utils')
         var accountStatusEnum = app.get('enums').ACCOUNT_STATUS
         var SUPER_ROLE = app.get('constants').SUPER_ROLE
+        var ADMIN_HOME_PATH = app.get('constants').ADMIN_HOME_PATH
         
         var username = req.body.username
         var password = req.body.password
@@ -76,7 +77,7 @@ module.exports = function(app, publicRouter, config, M, sequelize) {
                     // check for home page
                     M.Department.findOne({ where: { department_id: results[0].dataValues.department_id } }).then(department => {
                         if (account.dataValues.role_id == SUPER_ROLE || results[1]) {
-                            req.session.home_path = '/news'
+                            req.session.home_path = ADMIN_HOME_PATH
                         } else {
                             req.session.home_path = department.path
                         }

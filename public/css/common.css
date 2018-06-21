@@ -66,3 +66,15 @@ select.form-control {
     text-decoration: none;
     cursor: pointer;
 }
+
+.nav-item.active {
+    background: #f2f8f9 !important;
+    color: #308ee0;
+}
+
+p.profile-name, span.company-name {
+    font-size: 18px !important;
+}
+a.nav-link, span.menu-title, small.designation.text-muted, th, td {
+    font-size: 16px !important;
+}
