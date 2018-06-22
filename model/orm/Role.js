@@ -5,7 +5,7 @@ var Role = sequelize.define('role', {
     role_id: { type: Sequelize.INTEGER(10), primaryKey: true, autoIncrement: true},
     name: Sequelize.STRING(50),
     description: Sequelize.TEXT,
-    department_id: Sequelize.INTEGER(10),
+    // department_id: Sequelize.INTEGER(10),
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
 },{

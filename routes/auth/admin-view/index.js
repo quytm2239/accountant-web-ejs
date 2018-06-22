@@ -3,9 +3,9 @@ module.exports = function(app, authRouter, config, M, sequelize) {
 	var ADMIN_HOME_PATH = app.get('constants').ADMIN_HOME_PATH
 	var ADMIN_HOME_PATH_NAME = app.get('constants').ADMIN_HOME_PATH_NAME
 
-	authRouter.get('/home', function(req, res) {
+	authRouter.get('/member-approve', function(req, res) {
 		var department = []
-		
+
 		Promise.all([
 			M.Department.findAll(),
 			M.Profile.findOne({ where: { account_id: req.session.account_id } }),

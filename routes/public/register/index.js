@@ -20,14 +20,14 @@ module.exports = function(app, publicRouter, config, M, sequelize) {
     M.Role.findAll().then(list => {
         roles.push({display: 'Cấp bậc', value: '#'})
         list.forEach(function(item) {
-            roles.push({display: item.dataValues.name, value: item.dataValues.id})
+            roles.push({display: item.dataValues.name, value: item.dataValues.role_id})
         })
     });
 
     M.Department.findAll().then(list => {
         departments.push({display: 'Phòng ban', value: '#'})
         list.forEach(function(item) {
-            departments.push({display: item.dataValues.name, value: item.dataValues.id})
+            departments.push({display: item.dataValues.name, value: item.dataValues.department_id})
         })
     });
 

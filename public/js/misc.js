@@ -40,6 +40,21 @@
 				window.location = data;
 			});
 		});
+		$('#testDelete').on('click', function(){
+			$.ajax({
+			    url: '/test-delete',
+			    type: 'DELETE',
+				data: {alo: 'alo'},
+			    success: function(result) {
+					alert(result.message);
+				},
+			    error: function(result){
+					alert(result.responseJSON);
+				}
+			});
+		})
+
+
 
 		//Add active class to nav-link based on url dynamically
 		//Active class can be hard coded directly in html file also as required

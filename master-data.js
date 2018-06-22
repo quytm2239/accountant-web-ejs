@@ -22,7 +22,7 @@ module.exports = function(sequelize, Account, Profile, utils, accountStatusEnum)
           transaction: t
         }).then(function(account) {
           return Profile.create({
-            account_id: account.dataValues.id,
+            account_id: account.dataValues.account_id,
             avatar: 'http://localhost:3000/avatar/hulkbuster2.0.jpg',
             full_name: 'admin',
             gender: 10,

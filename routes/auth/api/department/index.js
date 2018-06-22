@@ -65,7 +65,7 @@ module.exports = function(app,authRouter,config,M,sequelize){
 
         M.Department.findOne({ where:
             {
-                id: id
+                department_id: id
             }
         }).then(department => {
             res.status(200).send(

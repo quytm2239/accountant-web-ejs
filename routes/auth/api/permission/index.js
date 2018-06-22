@@ -82,7 +82,7 @@ module.exports = function(app,authRouter,config,M,sequelize){
 
         M.Permission.findOne({ where:
             {
-                id: id
+                permission_id: id
             }
         }).then(permission => {
             res.status(200).send(
@@ -156,7 +156,7 @@ module.exports = function(app,authRouter,config,M,sequelize){
 
         M.Permission.findOne({ where:
             {
-                id: id
+                permission_id: id
             }
         }).then(permission => {
             if (permission) {
@@ -207,7 +207,7 @@ module.exports = function(app,authRouter,config,M,sequelize){
 
         M.Permission.findOne({ where:
             {
-                id: id
+                permission_id: id
             }
         }).then(permission => {
             if (permission) {

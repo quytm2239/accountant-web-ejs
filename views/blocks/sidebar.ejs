@@ -15,15 +15,18 @@
 						</div>
 					</div>
 				</div>
-				<button class="btn btn-success btn-block">New<i class="mdi mdi-plus"></i></button>
+				<button class="btn btn-success btn-block" id="testDelete">New<i class="mdi mdi-plus"></i></button>
 			</div>
 		</li>
-		<li class="nav-item">
-			<a class="nav-link" href="index.html">
-				<i class="menu-icon mdi mdi-television"></i>
-				<span class="menu-title">Dashboard</span>
-			</a>
-		</li>
+		<% funcItem.forEach(function(item) { %>
+			<li class="nav-item">
+				<a class="nav-link" href="<%= item.path %>">
+					<i class="menu-icon mdi mdi-television"></i>
+					<span class="menu-title"><%= item.name %></span>
+				</a>
+			</li>
+		<% }) %>
+
 		<!-- dropdownlist -->
 		<li class="nav-item">
 			<a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">

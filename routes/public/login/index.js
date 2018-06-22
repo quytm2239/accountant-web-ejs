@@ -35,7 +35,7 @@ module.exports = function(app, publicRouter, config, M, sequelize) {
         var accountStatusEnum = app.get('enums').ACCOUNT_STATUS
         var SUPER_ROLE = app.get('constants').SUPER_ROLE
         var ADMIN_HOME_PATH = app.get('constants').ADMIN_HOME_PATH
-        
+
         var username = req.body.username
         var password = req.body.password
         if (utils.isNullorUndefined(username) || utils.isNullorUndefined(password)) {
@@ -71,7 +71,7 @@ module.exports = function(app, publicRouter, config, M, sequelize) {
                     req.session.email = account.dataValues.email
                     req.session.role_id = account.dataValues.role_id
 
-                    req.session.profile_id = results[0].dataValues.id
+                    req.session.profile_id = results[0].dataValues.profile_id
                     req.session.department_id = results[0].dataValues.department_id
 
                     // check for home page

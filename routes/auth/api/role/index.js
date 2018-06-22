@@ -72,7 +72,7 @@ module.exports = function(app,authRouter,config,M,sequelize){
 
         M.Role.findOne({ where:
             {
-                id: id
+                role_id: id
             }
         }).then(role => {
             return res.status(200).send(
@@ -84,30 +84,31 @@ module.exports = function(app,authRouter,config,M,sequelize){
             )
         })
     })
-    authRouter.get('/role-by-department', function(req, res) {
+    // authRouter.get('/role-by-department', function(req, res) {
+    //
+    //     var deparment_id = req.query.deparment_id
+    //
+    //     if (utils.isNullorUndefined(deparment_id) || isNaN(deparment_id))
+    //     return res.status(400).send({
+    //         success: false,
+    //         message: 'deparment_id is not valid(number)!'
+    //     })
+    //
+    //     M.Role.findOne({ where:
+    //         {
+    //             deparment_id: deparment_id
+    //         }
+    //     }).then(role => {
+    //         return res.status(200).send(
+    //             utils.response(
+    //                 true
+    //                 ,errcode.errorMessage(errcode.code_success)
+    //                 ,role ? [role] : role
+    //             )
+    //         )
+    //     })
+    // })
 
-        var deparment_id = req.query.deparment_id
-
-        if (utils.isNullorUndefined(deparment_id) || isNaN(deparment_id))
-        return res.status(400).send({
-            success: false,
-            message: 'deparment_id is not valid(number)!'
-        })
-
-        M.Role.findOne({ where:
-            {
-                deparment_id: deparment_id
-            }
-        }).then(role => {
-            return res.status(200).send(
-                utils.response(
-                    true
-                    ,errcode.errorMessage(errcode.code_success)
-                    ,role ? [role] : role
-                )
-            )
-        })
-    })
     authRouter.get('/all-role', function(req, res) {
         M.Role.findAll().then(roles => {
             return res.status(200).send(
@@ -145,7 +146,7 @@ module.exports = function(app,authRouter,config,M,sequelize){
 
         M.Role.findOne({ where:
             {
-                id: id
+                role_id: id
             }
         }).then(role => {
             if (role) {
@@ -225,7 +226,7 @@ module.exports = function(app,authRouter,config,M,sequelize){
 
         M.Role.findOne({ where:
             {
-                id: id
+                role_id: id
             }
         }).then(role => {
             if (role) {

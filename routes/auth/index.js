@@ -7,7 +7,7 @@ module.exports = function(app, authRouter, config, M, sequelize) {
         M.AdminList.findOne({
             where: { account_id: req.session.account_id }
         }).then(object => {
-            if (req.session.role_id != SUPER_ROLE || object == null || object.length == 0) {
+            if (req.session.role_id != SUPER_ROLE && object == null) {
                 return res.status(403).send({
                     success: false,
                     message: 'Your current logged-in account is not allowed to do this action!'
@@ -18,7 +18,7 @@ module.exports = function(app, authRouter, config, M, sequelize) {
         })
     })
 
-    // require('./admin-view')(app, authRouter, config, M, sequelize)
+    require('./admin-view')(app, authRouter, config, M, sequelize)
 
 	require('./api/account')(app, authRouter, config, M, sequelize)
 	require('./api/department')(app, authRouter, config, M, sequelize)

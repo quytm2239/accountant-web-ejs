@@ -4,7 +4,13 @@ module.exports = function(app,authRouter,config,M,sequelize){
     var errcode = app.get('errcode')
     var accountStatusEnum = app.get('enums').ACCOUNT_STATUS
 
-    authRouter.post('/add-member', function(req, res) {
+    authRouter.delete('/test-delete', function (req, res) {
+        res.send({
+            message: req.body.alo
+        })
+    })
+
+    authRouter.post('/member-add', function(req, res) {
 
         var email 	 = req.body.email
         var username = req.body.username
@@ -143,7 +149,7 @@ module.exports = function(app,authRouter,config,M,sequelize){
                                 role_id: role_id
                             }, {transaction: t}).then(function (account) {
                                 return M.Profile.create({
-                                    account_id: account.dataValues.id,
+                                    account_id: account.dataValues.account_id,
                                     full_name: full_name,
                                     gender: parseInt(gender),
                                     dob: dob,
@@ -193,22 +199,24 @@ module.exports = function(app,authRouter,config,M,sequelize){
         //   res.redirect('/login')
         // })
     })
-    authRouter.get('/pending-account', function(req, res) {
-        M.Account.findAll({
-            where : {
-                status: accountStatusEnum.NEED_APPROVAL
-            }
-        }).then(accounts => {
-            res.status(200).send(
-                utils.response(
-                    true
-                    ,errcode.errorMessage(errcode.code_success)
-                    ,accounts ? accounts : []
-                )
-            )
-        })
-    })
-    authRouter.post('/approve-account', function(req, res) {
+
+    // authRouter.get('/member-approve', function(req, res) {
+    //     M.Account.findAll({
+    //         where : {
+    //             status: accountStatusEnum.NEED_APPROVAL
+    //         }
+    //     }).then(accounts => {
+    //         res.status(200).send(
+    //             utils.response(
+    //                 true
+    //                 ,errcode.errorMessage(errcode.code_success)
+    //                 ,accounts ? accounts : []
+    //             )
+    //         )
+    //     })
+    // })
+
+    authRouter.post('/member-approve', function(req, res) {
 
         var id = req.body.id
 
@@ -220,7 +228,7 @@ module.exports = function(app,authRouter,config,M,sequelize){
 
         M.Acount.findOne({ where:
             {
-                id: id
+                account_id: id
             }
         }).then(account => {
             if (account) {
@@ -260,14 +268,14 @@ module.exports = function(app,authRouter,config,M,sequelize){
 
         M.Account.findOne({ where:
             {
-                id: id
+                account_id: id
             }
         }).then(account => {
             if (account) {
                 sequelize.transaction(function (t) {
                     // chain all your queries here. make sure you return them.
                     return M.Account.destroy({
-                        where: { id: id }
+                        where: { account_id: id }
                     }, {transaction: t}
                     ).then(function (result) {
                         return M.Profile.destroy({
