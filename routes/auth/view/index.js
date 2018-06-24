@@ -17,22 +17,23 @@ module.exports = function(app, authRouter, config, M, sequelize) {
 
 	authRouter.get([ADMIN_HOME_PATH,'/acc','/hr','/sec'], function(req, res) {
 		var department = []
+		var normalQuery = 'select f.* from function f, department d where f.department_id = d.department_id and d.path like :path'
+		var adminQuery = 'select * from function where department_id = ' + SUPER_ROLE
+		var executedQuery = req.path == ADMIN_HOME_PATH ? adminQuery : normalQuery
 		Promise.all([
 			M.Department.findAll(),
 			M.Profile.findOne({ where: { account_id: req.session.account_id } }),
-			// M.Function.find({ where: { department_id : req.session.department_id } })
-			//M.AdminList.findOne({ where: { account_id: req.session.account_id } })
+			sequelize.query(executedQuery, {
+				replacements: { path: req.path },
+				type: sequelize.QueryTypes.SELECT,
+				model: M.Function })
 		]).then(results => {
 			var funcItem = []
-			if (functionList) {
-				functionList.forEach(elem => {
-					if (req.session.department_id == elem.dataValues.department_id) {
-						funcItem.push(elem.dataValues)
-					} else if (req.session.role_id == SUPER_ROLE && req.session.role_id == elem.dataValues.department_id) {
-						// this for admin role: 777
-						funcItem.push(elem.dataValues)
-					}
-				});
+
+			if (results[2]) {
+				results[2].forEach(func => {
+					funcItem.push(func.dataValues)
+				})
 			}
 			// create nav bar item
 			// check admin's permission
@@ -55,8 +56,6 @@ module.exports = function(app, authRouter, config, M, sequelize) {
 					main: elem.dataValues.path == req.session.home_path,
 				})
 			});
-
-			console.log(funcItem);
 
 			// get current profile
 			var currentProfile = results[1]

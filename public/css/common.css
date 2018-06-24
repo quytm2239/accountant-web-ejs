@@ -78,7 +78,3 @@ p.profile-name, span.company-name {
 a.nav-link, span.menu-title, small.designation.text-muted, th, td {
     font-size: 16px !important;
 }
-
-span.menu-title {
-    font-size: 14px !important;
-}
