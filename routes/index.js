@@ -4,7 +4,6 @@ module.exports = function(app, config, M, sequelize, express) {
 
     // Process to check session
     publicRouter.use(function(req, res, next) {
-        console.log(req.session)
         if (req.session.account_id) {
             next()
         } else {
