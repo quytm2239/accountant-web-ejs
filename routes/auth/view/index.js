@@ -16,56 +16,6 @@ module.exports = function(app, authRouter, config, M, sequelize) {
 	})
 
 	authRouter.get([ADMIN_HOME_PATH,'/acc','/hr','/sec'], function(req, res) {
-		var department = []
-		Promise.all([
-			M.Department.findAll(),
-			M.Profile.findOne({ where: { account_id: req.session.account_id } }),
-			// M.Function.find({ where: { department_id : req.session.department_id } })
-			//M.AdminList.findOne({ where: { account_id: req.session.account_id } })
-		]).then(results => {
-			var funcItem = []
-			if (functionList) {
-				functionList.forEach(elem => {
-					if (req.session.department_id == elem.dataValues.department_id) {
-						funcItem.push(elem.dataValues)
-					} else if (req.session.role_id == SUPER_ROLE && req.session.role_id == elem.dataValues.department_id) {
-						// this for admin role: 777
-						funcItem.push(elem.dataValues)
-					}
-				});
-			}
-			// create nav bar item
-			// check admin's permission
-			if (req.session.home_path == ADMIN_HOME_PATH) {
-				department.push({
-					name: ADMIN_HOME_PATH_NAME,
-					path: ADMIN_HOME_PATH,
-					active: req.path == ADMIN_HOME_PATH ? 'active' : '',
-					icon: ADMIN_PATH_ICON,
-					main: true,
-				})
-			}
-
-			results[0].forEach(elem => {
-				department.push({
-					name: elem.dataValues.name,
-					path: elem.dataValues.path,
-					active: elem.dataValues.path == req.path ? 'active' : '',
-					icon: elem.dataValues.icon,
-					main: elem.dataValues.path == req.session.home_path,
-				})
-			});
-
-			console.log(funcItem);
-
-			// get current profile
-			var currentProfile = results[1]
-			res.render("auth-page/" + req.path, {
-				profile: currentProfile.dataValues,
-				department: department,
-				companyName: COMPANY_NAME,
-				funcItem: funcItem
-			})
-		})
+		res.render("auth-page" + req.path, res.locals.commonData)
 	})
 }

@@ -1,39 +1,31 @@
 module.exports = function(app, authRouter, config, M, sequelize) {
 
+	var SUPER_ROLE = app.get('constants').SUPER_ROLE
 	var ADMIN_HOME_PATH = app.get('constants').ADMIN_HOME_PATH
 	var ADMIN_HOME_PATH_NAME = app.get('constants').ADMIN_HOME_PATH_NAME
+	var COMPANY_NAME = app.get('constants').COMPANY_NAME
+	var ADMIN_PATH_ICON = app.get('constants').ADMIN_PATH_ICON
+
+	var functionList = []
+	M.Function.findAll().then(list => {
+		functionList = list
+	})
 
 	authRouter.get('/member-approve', function(req, res) {
 		var department = []
 
-		Promise.all([
-			M.Department.findAll(),
-			M.Profile.findOne({ where: { account_id: req.session.account_id } }),
-			M.AdminList.findOne({ where: { account_id: req.session.account_id } })
-		]).then(results => {
-			// check admin's permission
-			if (req.session.role_id == 777 || results[2].length > 0) {
-				department.push({
-					name: ADMIN_HOME_PATH_NAME,
-					path: ADMIN_HOME_PATH
-				})
-			}
-			// create nav bar item
-			results[0].forEach(elem => {
-				department.push({
-					name: elem.dataValues.name,
-					path: elem.dataValues.path
-				})
-			});
-
-			// get current profile
-			var currentProfile = results[1]
-
-			res.render("home", {
-				profile: currentProfile.dataValues,
-				department: department,
-				companyName: "Cty TNHH Phú Liên"
-			})
+		sequelize.query('SELECT a.*, p.* FROM account a, profile p where a.status =:status and p.account_id = a.account_id',
+		{
+			replacements: {
+				status: app.get('enums').ACCOUNT_STATUS.NEED_APPROVAL
+			},
+			model: M.Profile,
+			type: sequelize.QueryTypes.SELECT
 		})
+		.then(profile => {
+			console.log(profile);
+		})
+
+		res.render("admin-page" + req.path, res.locals.commonData)
 	})
 }
