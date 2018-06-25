@@ -11,7 +11,7 @@ module.exports = function(app, authRouter, config, M, sequelize) {
 		functionList = list
 	})
 
-	authRouter.get('/member-approve', function(req, res) {
+	authRouter.get('/news/member-approve', function(req, res) {
 		var department = []
 
 		sequelize.query('SELECT a.*, p.* FROM account a, profile p where a.status =:status and p.account_id = a.account_id',
@@ -25,7 +25,57 @@ module.exports = function(app, authRouter, config, M, sequelize) {
 		.then(profile => {
 			console.log(profile);
 		})
+		res.render("admin-page" + '/member-approve', res.locals.commonData)
+	})
 
-		res.render("admin-page" + req.path, res.locals.commonData)
+	authRouter.get('/news/member-add', function(req, res) {
+		var department = []
+
+		sequelize.query('SELECT a.*, p.* FROM account a, profile p where a.status =:status and p.account_id = a.account_id',
+		{
+			replacements: {
+				status: app.get('enums').ACCOUNT_STATUS.NEED_APPROVAL
+			},
+			model: M.Profile,
+			type: sequelize.QueryTypes.SELECT
+		})
+		.then(profile => {
+			console.log(profile);
+		})
+		res.render("admin-page" + '/member-approve', res.locals.commonData)
+	})
+
+	authRouter.get('/news/member-remove', function(req, res) {
+		var department = []
+
+		sequelize.query('SELECT a.*, p.* FROM account a, profile p where a.status =:status and p.account_id = a.account_id',
+		{
+			replacements: {
+				status: app.get('enums').ACCOUNT_STATUS.NEED_APPROVAL
+			},
+			model: M.Profile,
+			type: sequelize.QueryTypes.SELECT
+		})
+		.then(profile => {
+			console.log(profile);
+		})
+		res.render("admin-page" + '/member-approve', res.locals.commonData)
+	})
+
+	authRouter.get('/news/member-list', function(req, res) {
+		var department = []
+
+		sequelize.query('SELECT a.*, p.* FROM account a, profile p where a.status =:status and p.account_id = a.account_id',
+		{
+			replacements: {
+				status: app.get('enums').ACCOUNT_STATUS.NEED_APPROVAL
+			},
+			model: M.Profile,
+			type: sequelize.QueryTypes.SELECT
+		})
+		.then(profile => {
+			console.log(profile);
+		})
+		res.render("admin-page" + '/member-approve', res.locals.commonData)
 	})
 }
