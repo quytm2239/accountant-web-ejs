@@ -1,0 +1,73 @@
+<div class="content-wrapper d-flex align-items-center auth register-bg-1 theme-one">
+	<div class="row w-100">
+		<div class="col-lg-5 mx-auto">
+			<h2 class="text-center mb-4">Register</h2>
+			<div class="auto-form-wrapper">
+				<label id="errorLabel" class="label" style="text-align: center; width: 100%; color: red;"></label>
+				<form action="/register" method="post" enctype="multipart/form-data" id="registerForm">
+					<% inputs.forEach(function(input) { %>
+						<% if (input.constructor === Array) { %>
+							<% var widthPerItem = (100 / input.length) + '%'; %>
+							<div style="display: flex;">
+							<% for (i = 0; i < input.length; i++) { %>
+								<%
+									var item = input[i];
+									var marginCSS = i == 0 ? 'margin-right:10px;' : i == input.length - 1 ? 'margin-left:10px;' : 'margin-left:10px; margin-right:10px;';
+								%>
+								<% if (item.type == 'select') { %> <!-- if select -->
+									<div class="form-group" style="width: <%= widthPerItem %>; <%= marginCSS %>">
+										<label class="label"><%= item.placeholder %></label>
+										<select class="form-control form-control-lg" name="<%= item.name %>">
+											<% item.options.forEach(function(option) { %>
+												<option value="<%= option.value %>"><%= option.display %></option>
+											<% }) %>
+										</select>
+									</div>
+								<% } else { %> <!-- if select -->
+									<div class="form-group" style="width: <%= widthPerItem %>; <%= marginCSS %>">
+										<label class="label"><%= item.placeholder %></label>
+										<div class="input-group">
+											<input type="<%= item.type %>" name="<%= item.name %>" class="form-control" placeholder="<%= item.placeholder %>" >
+											<div class="input-group-append">
+												<span class="input-group-text">
+													<i class="mdi mdi-check-circle-outline"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+								<% } %> <!-- else select -->
+							<% } %> <!-- for in array -->
+							</div>
+						<% } else { %> <!-- if is array -->
+							<div class="form-group">
+								<label class="label"><%= input.placeholder %></label>
+								<div class="input-group">
+									<input type="<%= input.type %>" name="<%= input.name %>" class="form-control" placeholder="<%= input.placeholder %>" >
+									<div class="input-group-append">
+										<span class="input-group-text">
+											<i class="mdi mdi-check-circle-outline"></i>
+										</span>
+									</div>
+								</div>
+							</div>
+						<% } %> <!-- else is array -->
+					<% }); %> <!-- for each -->
+					<div class="form-group d-flex justify-content-center">
+						<div class="form-check form-check-flat mt-0">
+							<label class="form-check-label">
+                      			<input type="checkbox" class="form-check-input" checked> I agree to the terms
+                    		</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<button class="btn btn-primary submit-btn btn-block" id="btnRegister">Register</button>
+					</div>
+					<div class="text-block text-center my-3">
+						<span class="text-small font-weight-semibold">Already have and account ?</span>
+						<a href="/login" class="text-black text-small">Login</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
