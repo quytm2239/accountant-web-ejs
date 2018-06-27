@@ -35,9 +35,12 @@ module.exports = function(app, authRouter, config, M, sequelize) {
 			type: sequelize.QueryTypes.SELECT
 		})
 		.then(profile => {
-			var pendingList = []
-			profile.forEach(elem => { pendingList.push(elem.dataValues) })
 
+			var pendingList = []
+			for (var i = 0; i < profile.length; i++) {
+				pendingList.push(profile[i])
+			}
+			console.log(pendingList)
 			var basicData = res.locals.commonData
 			let listHeader = []
 			if (pendingList.length > 0) {
@@ -45,6 +48,7 @@ module.exports = function(app, authRouter, config, M, sequelize) {
 				console.log(listHeader);
 			}
 			basicData.pendingList = pendingList
+			basicData.listHeader = listHeader
 
 			res.render("admin-page" + '/member-approve', basicData)
 		})
@@ -80,104 +84,102 @@ module.exports = function(app, authRouter, config, M, sequelize) {
 			}
 		]
 
-		res.render(MEMBER_ADD_VIEW_PATH, {
-            inputs: [
-                [
-                    {
-                        type: 'text',
-                        name: 'full_name',
-                        placeholder: 'Full name'
-                    }, {
-                        type: 'select',
-                        name: 'gender',
-                        placeholder: 'Gender',
-                        options: genders
-                    }
-                ],
-                // same line
-                [
-                    {
-                        type: 'text',
-                        name: 'email',
-                        placeholder: 'Email'
-                    }, {
-                        type: 'text',
-                        name: 'username',
-                        placeholder: 'Username'
-                    }
-                ],
-                // same line
-                [
-                    {
-                        type: 'password',
-                        name: 'password',
-                        placeholder: 'Password'
-                    }, {
-                        type: 'password',
-                        name: 'retype_password',
-                        placeholder: 'Confirm password'
-                    }
-                ],
-                [
+		var finalData = res.locals.commonData
+		finalData.inputs = [
+			[
+				{
+					type: 'text',
+					name: 'full_name',
+					placeholder: 'Full name'
+				}, {
+					type: 'select',
+					name: 'gender',
+					placeholder: 'Gender',
+					options: genders
+				}
+			],
+			// same line
+			[
+				{
+					type: 'text',
+					name: 'email',
+					placeholder: 'Email'
+				}, {
+					type: 'text',
+					name: 'username',
+					placeholder: 'Username'
+				}
+			],
+			// same line
+			[
+				{
+					type: 'password',
+					name: 'password',
+					placeholder: 'Password'
+				}, {
+					type: 'password',
+					name: 'retype_password',
+					placeholder: 'Confirm password'
+				}
+			],
+			[
+				{
+					type: 'date',
+					name: 'dob',
+					placeholder: 'Date of birth'
+				}, {
+					type: 'text',
+					name: 'phone',
+					placeholder: 'Phone',
+					pattern: '[0-9]{10}'
+				}
+			], {
+				type: 'text',
+				name: 'address',
+				placeholder: 'Address'
+			},
+			[
+				{
+					type: 'select',
+					name: 'role_id',
+					placeholder: 'Role',
+					options: roles
+				}, {
+					type: 'select',
+					name: 'department_id',
+					placeholder: 'Department',
+					options: departments
+				}
+			],
+			[
+				{
+					type: 'text',
+					name: 'job_title',
+					placeholder: 'Job title'
+				}, {
+					type: 'date',
+					name: 'join_date',
+					placeholder: 'Join date'
+				}
+			],
+			[
+				{
+					type: 'text',
+					name: 'contract_code',
+					placeholder: 'Contract code'
+				}, {
+					type: 'text',
+					name: 'staff_code',
+					placeholder: 'Staff code'
+				}
+			], {
+				type: 'file',
+				name: 'avatar',
+				placeholder: 'Avatar'
+			}
+		]
 
-                    {
-                        type: 'date',
-                        name: 'dob',
-                        placeholder: 'Date of birth'
-                    }, {
-                        type: 'text',
-                        name: 'phone',
-                        placeholder: 'Phone',
-                        pattern: '[0-9]{10}'
-                    }
-                ], {
-                    type: 'text',
-                    name: 'address',
-                    placeholder: 'Address'
-                },
-                [
-                    {
-                        type: 'select',
-                        name: 'role_id',
-                        placeholder: 'Role',
-                        options: roles
-                    }, {
-                        type: 'select',
-                        name: 'department_id',
-                        placeholder: 'Department',
-                        options: departments
-                    }
-                ],
-                [
-                    {
-                        type: 'text',
-                        name: 'job_title',
-                        placeholder: 'Job title'
-                    }, {
-                        type: 'date',
-                        name: 'join_date',
-                        placeholder: 'Join date'
-                    }
-                ],
-                [
-                    {
-                        type: 'text',
-                        name: 'contract_code',
-                        placeholder: 'Contract code'
-                    }, {
-                        type: 'text',
-                        name: 'staff_code',
-                        placeholder: 'Staff code'
-                    }
-                ], {
-                    type: 'file',
-                    name: 'avatar',
-                    placeholder: 'Avatar'
-                }
-            ]
-        })
-
-		res.render("admin-page" + '/member-add', res.locals.commonData)
+		res.render(MEMBER_ADD_VIEW_PATH, res.locals.commonData)
 	})
 
 	authRouter.get('/news/member-remove', function(req, res) {
