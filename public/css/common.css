@@ -1,8 +1,12 @@
 .form-group label, .form-control {
     font-size: 1rem;
 }
-.input-group-text {
+.input-group-text, .btn {
     padding: 0.56rem 1rem;
+}
+
+.table td, .table th {
+    padding: 12px 18px;
 }
 
 select.form-control {
@@ -73,10 +77,10 @@ select.form-control {
 }
 
 p.profile-name, span.company-name {
-    font-size: 18px !important;
+    font-size: 16px !important;
 }
 a.nav-link, span.menu-title, small.designation.text-muted, th, td {
-    font-size: 16px !important;
+    font-size: 14px !important;
 }
 
 span.menu-title {

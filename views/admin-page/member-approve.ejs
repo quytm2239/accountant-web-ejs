@@ -1,4 +1,4 @@
-<div class="row">
+ <div class="row">
 	<div class="col-lg-12 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">
@@ -14,19 +14,24 @@
 								<% listHeader.forEach(header => { %>
 									<th><%= header %></th>
 								<% }) %>
+								<th> </th>
 							</tr>
 						</thead>
 						<tbody>
 							<% pendingList.forEach(elem => { %>
-							<tr>
-								<% listHeader.forEach(header => { %>
-									<% if (header == 'avatar') { %>
-										<td class="py-1"><img src="<%= elem[header] %>" alt="image" /></td>
-									<% } else { %>
-										<td><%= elem[header] %></td>
-									<% } %>
-								<% }) %>
-							</tr>
+								<tr>
+									<% listHeader.forEach(header => { %>
+										<% if (header == 'avatar') { %>
+											<td class="py-1"><img class="img-zoom" src="<%= elem[header] %>" alt="image" /></td>
+										<% } else { %>
+											<td><%= elem[header] %></td>
+										<% } %>
+									<% }) %>
+									<td>
+										<i id="btnApprove" class="mdi mdi-checkbox-marked" style="font-size: 30px;color: green;"></i>
+										<i id="btnReject" class="mdi mdi-minus-box" style="font-size: 30px;color: red;"></i>
+									</td>
+								</tr>
 							<% }) %>
 						</tbody>
 					</table>
