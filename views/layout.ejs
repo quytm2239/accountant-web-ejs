@@ -91,9 +91,9 @@
 			var myImageModal = document.getElementById('myImageModal');
 			// Get the button that opens the modal
 			// Get the <span> element that closes the modal
-			$('.close').onclick = function () {
+			$('.close').on('click',function () {
 		        modal.style.display = "none";
-		    }
+		    });
 			// When the user clicks anywhere outside of the modal, close it
 			window.onclick = function(event) {
 				if (event.target == modal) {
